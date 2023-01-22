@@ -151,14 +151,16 @@ app.get("/states/:stateId/stats/", async (request, response) => {
 //API 8
 
 app.get("/districts/:districtId/details/", async (request, response) => {
-  const { stateId } = request.params;
+  const { districtId } = request.params;
   const getStateIdQuery = `
     SELECT 
         state_name
     FROM 
+      district
+    NATURAL JOIN
         state
     WHERE 
-        state_id = '${stateId}';`;
+        district_id = '${districtId}';`;
   const state = await db.get(getStateIdQuery);
   response.send(dbObjectToObjectResponse(state));
 });
